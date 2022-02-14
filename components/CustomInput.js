@@ -4,6 +4,8 @@ const CustomInput = ({ countries }) => {
   const [countriesList, setCountries] = useState(countries);
   const [text, setText] = useState("Select Country");
   const [show, setShow] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [code, setCode] = useState("");
   const handleChange = (e) => {
     var temp = [];
     countries.map((ele) => {
@@ -14,6 +16,25 @@ const CustomInput = ({ countries }) => {
       }
     });
     setCountries(temp);
+  };
+
+  const handleName = (ele) => {
+    setShow(false);
+    var cc = ele.idd.root + ele.idd.suffixes.toString();
+    setCode(cc);
+    var strText = ele.name.common + " " + "(" + cc + ")";
+    setText(strText);
+  };
+
+  const sendRequest = async () => {
+    const req = await fetch(`http://wa.me/${code + phoneNumber}`, {
+      mode: "no-cors" // 'cors' by default
+    });
+    console.log(req.text());
+  };
+  const handleSubmit = () => {
+    console.log(code + phoneNumber);
+    sendRequest();
   };
 
   return (
@@ -30,7 +51,7 @@ const CustomInput = ({ countries }) => {
             {countriesList.map((ele, i) => {
               return (
                 <p
-                  onClick={() => setText(ele.name.common)}
+                  onClick={() => handleName(ele)}
                   key={i}
                   className={styles.item}
                 >
@@ -55,10 +76,14 @@ const CustomInput = ({ countries }) => {
       </div>
       <input
         type="tel"
+        onChange={(e) => setPhoneNumber(e.target.value)}
         className={styles.customInput}
         maxLength="10"
         defaultValue="0123456"
       />
+      <div onClick={handleSubmit} className={styles.button}>
+        Submit
+      </div>
     </div>
   );
 };

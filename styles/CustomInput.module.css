@@ -70,3 +70,20 @@
     box-shadow: 0 0 0 1px #00a1c9;
     border-radius: 0;
 }
+
+.button{
+    width: 300px;
+    background-color: #111;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    color: white;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.button:hover{
+    background-color: #455;
+}
