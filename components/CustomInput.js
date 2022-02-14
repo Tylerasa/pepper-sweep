@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import styles from "../styles/CustomInput.module.css";
 const CustomInput = ({ countries }) => {
   const [countriesList, setCountries] = useState(countries);
-  const [text, setText] = useState("");
+  const [text, setText] = useState("Select Country");
+  const [show, setShow] = useState(false);
   const handleChange = (e) => {
     var temp = [];
     countries.map((ele) => {
@@ -17,24 +18,31 @@ const CustomInput = ({ countries }) => {
 
   return (
     <div>
-      <div className={styles.searchWrapper}>
-        <input
-          onChange={(e) => handleChange(e)}
-          className={styles.search}
-          type="text"
-        />
-        <div className={styles.list}>
-          {countriesList.map((ele, i) => {
-            return (
-              <p key={i} className={styles.item}>
-                <span>{ele.name.common}</span>
-              </p>
-            );
-          })}
+      {show && (
+        <div className={styles.searchWrapper}>
+          <input
+            autoFocus
+            onChange={(e) => handleChange(e)}
+            className={styles.search}
+            type="text"
+          />
+          <div className={styles.list}>
+            {countriesList.map((ele, i) => {
+              return (
+                <p
+                  onClick={() => setText(ele.name.common)}
+                  key={i}
+                  className={styles.item}
+                >
+                  <span>{ele.name.common}</span>
+                </p>
+              );
+            })}
+          </div>
         </div>
-      </div>
-      <div className={styles.selectInput}>
-        <p>Ghana</p>
+      )}
+      <div onClick={() => setShow(!show)} className={styles.selectInput}>
+        <p>{text}</p>
         <svg
           className={styles.svg}
           xmlns="http://www.w3.org/2000/svg"
