@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 import styles from "../styles/CustomInput.module.css";
 const CustomInput = ({ countries }) => {
-  console.log(countries);
-
   const [countriesList, setCountries] = useState(countries);
+  const [text, setText] = useState("");
   const handleChange = (e) => {
-    setCountries(countries.filter(checkWord));
+    var temp = [];
+    countries.map((ele) => {
+      if (
+        ele.name.common.toLowerCase().indexOf(e.target.value.toLowerCase()) > -1
+      ) {
+        temp.push(ele);
+      }
+    });
+    setCountries(temp);
   };
-  function checkWord(word) {
-    return word.name.includes(e.target.value);
-  }
+
   return (
     <div>
       <div className={styles.searchWrapper}>
