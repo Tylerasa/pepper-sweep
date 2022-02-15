@@ -1,5 +1,7 @@
+import { Cheerio } from "cheerio";
 import React, { useState } from "react";
 import styles from "../styles/CustomInput.module.css";
+import cheerio from "cheerio";
 const CustomInput = ({ countries }) => {
   const [countriesList, setCountries] = useState(countries);
   const [text, setText] = useState("Select Country");
@@ -27,10 +29,19 @@ const CustomInput = ({ countries }) => {
   };
 
   const sendRequest = async () => {
-    const req = await fetch(`http://wa.me/${code + phoneNumber}`, {
+    // fetch(`https://wa.me/${code + phoneNumber}`, {
+    //   mode: "no-cors" // 'cors' by default
+    // })
+
+    fetch(`https://wa.me/233554251651`, {
       mode: "no-cors" // 'cors' by default
-    });
-    console.log(req.text());
+    })
+      .then((response) => console.log("res", response.text()))
+      .then((data) => {
+        console.log("data",data)
+        // const $ = cheerio.load(data);
+        // console.log($(".);
+      });
   };
   const handleSubmit = () => {
     console.log(code + phoneNumber);
